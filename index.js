@@ -1,43 +1,38 @@
+dotenv.config();
+
 import express from "express";
 import bodyParser from "body-parser";
-import mongoose from "mongoose";
+const app = express();
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
-import helmet from "helmet";
-import morgan from "morgan";
 
-import managmentRoutes from "./routes/managmentRoutes.js";
+import { mongoConnect } from "./config/databaseConnect.js";
+import productRoutes from "./routes/productRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import { corsSetting } from "./config/corsSetting.js";
 
-dotenv.config();
-const app = express();
-app.use(helmet());
-app.use(morgan("common"));
-app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+const PORT = process.env.PORT || 4000;
 
-app.use(bodyParser.json({ limit: "50mb" }));
+mongoConnect();
+app.use(cors(corsSetting));
+
 app.use(
   bodyParser.urlencoded({
-    limit: "50mb",
+    limit: "10mb",
     extended: true,
     parameterLimit: 50000,
   })
 );
 app.use(express.json({ limit: "5mb" }));
-app.use(cors());
 
-const PORT = process.env.PORT || 5000;
-mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`server running on port : ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+app.use(cookieParser());
 
-app.use("/managment", managmentRoutes);
+app.use("/", authRoutes);
+app.use("/product", productRoutes);
+app.use("/user", userRoutes);
+
+app.listen(PORT, () => {
+  console.log(`server running on port : ${PORT}`);
+});

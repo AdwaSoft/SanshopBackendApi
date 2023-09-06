@@ -1,4 +1,6 @@
 import express from "express";
+const router = express.Router();
+import { verifyToken } from "../middleware/verifyToken.js";
 import {
   getProducts,
   postProduct,
@@ -7,7 +9,8 @@ import {
   deleteProduct,
 } from "../controllers/product.js";
 
-const router = express.Router();
+// protect all Prodcut route from acccessing without valid token
+router.use(verifyToken);
 
 router.get("/products", getProducts);
 router.post("/productscreate", postProduct);
