@@ -2,6 +2,7 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://www.sanshop.com",
   "https://sanshop.com",
+  "https://sanshop.onrender.com",
 ];
 export const corsSetting = {
   origin: (origin, callback) => {
