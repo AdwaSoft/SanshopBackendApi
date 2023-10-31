@@ -10,7 +10,7 @@ import {
 } from "../controllers/product.js";
 
 // protect all Prodcut route from acccessing without valid token
-router.use(verifyToken);
+// router.use(verifyToken);
 
 router.get("/products", getProducts);
 router.post("/productscreate", postProduct);

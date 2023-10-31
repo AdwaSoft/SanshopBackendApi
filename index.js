@@ -13,7 +13,7 @@ import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import { corsSetting } from "./config/corsSetting.js";
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 6000;
 
 mongoConnect();
 app.use(cors(corsSetting));
