@@ -1,5 +1,5 @@
 const allowedOrigins = [
-  "https://sanwebsite.onrender.com/",
+  "https://sanwebsite.onrender.com",
   "https://sanshop.onrender.com",
 ];
 export const corsSetting = {
